@@ -1,6 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 from PIL import Image
+from pathlib import Path
 
 @st.cache_resource
 def load_model():
@@ -29,7 +30,9 @@ def main():
             st.success(f"Loại hoa: {en2vn[label]}. Độ chính xác {score:.2f}%")
 
     elif option_for_user == "Chạy ảnh mẫu":
-        image = Image.open('./image/roses.jpg')
+        BASE_DIR = Path(__file__).resolve().parent
+        image_path = BASE_DIR / "image" / "roses.jpg"
+        image = Image.open(image_path)
         image.thumbnail((300, 300)) 
 
         result = classifier(image)[0]
